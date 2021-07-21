@@ -6,6 +6,7 @@ import org.apache.commons.lang3.math.NumberUtils;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -43,7 +44,9 @@ public class App {
      * @throws URISyntaxException
      */
     private Path getFilePath(String fileName) throws URISyntaxException {
-        return Paths.get(getClass().getClassLoader().getResource(fileName).toURI());
+        URL fileURI = getClass().getClassLoader().getResource(fileName);
+        if (fileURI == null) throw new RuntimeException("File NOT found!");
+        return Paths.get(fileURI.toURI());
     }
 
     /**
